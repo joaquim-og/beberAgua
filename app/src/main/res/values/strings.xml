@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Beber Água</string>
+    <string name="hint">Intervalo(min)</string>
+    <string name="notify">Notificar</string>
+    <string name="validation">Coloca o intervalo e Xablau</string>
+    <string name="pause">Pausar</string>
+</resources>
