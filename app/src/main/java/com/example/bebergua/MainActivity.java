@@ -3,9 +3,13 @@ package com.example.bebergua;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -79,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
                     edit.putInt(KEY_HOUR, hour);
                     edit.putInt(KEY_MINUTE, minute);
                     edit.apply();
+
+                    Intent notificationIntent = new Intent(MainActivity.this, NotificationPublisher.class);
+                    notificationIntent.putExtra(NotificationPublisher.KEY_NOTIFICATION_ID, 1);
+                    notificationIntent.putExtra(NotificationPublisher.KEY_NOTIFICATION, getString(R.string.alert_message));
+
+
+                    PendingIntent broadcast = PendingIntent.getBroadcast(MainActivity.this, 0,
+                            notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    long futureInMillis = SystemClock.elapsedRealtime() + (interval * 1000);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, broadcast);
 
                     activated = true;
                 } else {

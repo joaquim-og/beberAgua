@@ -4,4 +4,5 @@
     <string name="notify">Notificar</string>
     <string name="validation">Coloca o intervalo e Xablau</string>
     <string name="pause">Pausar</string>
+    <string name="alert_message">Hora de tomar água</string>
 </resources>
