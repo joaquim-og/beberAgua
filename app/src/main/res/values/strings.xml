@@ -5,4 +5,7 @@
     <string name="validation">Coloca o intervalo e Xablau</string>
     <string name="pause">Pausar</string>
     <string name="alert_message">Hora de tomar água</string>
+    <string name="zero_value">O campo deve ser maior que 0</string>
+    <string name="notified">Alarme ativado</string>
+    <string name="notified_pause">Alarme desativado</string>
 </resources>

@@ -35,9 +35,11 @@ public class NotificationPublisher extends BroadcastReceiver {
                                          NotificationManager manager, PendingIntent intent) {
         Notification.Builder builder =
                 new Notification.Builder(context.getApplicationContext())
-                .setContentText(content).setContentIntent(intent)
+                .setContentText(content)
+                .setContentIntent(intent)
                 .setTicker("Alerta")
                 .setAutoCancel(false)
+                .setDefaults(Notification.DEFAULT_SOUND)
                 .setSmallIcon(R.mipmap.ic_launcher);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
