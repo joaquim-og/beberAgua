@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String KEY_NOTIFY = "key_notify";
@@ -90,11 +92,17 @@ public class MainActivity extends AppCompatActivity {
 
 
                     PendingIntent broadcast = PendingIntent.getBroadcast(MainActivity.this, 0,
-                            notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                            notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-                    long futureInMillis = SystemClock.elapsedRealtime() + (interval * 1000);
+                    //building the calendar and setting it's hour
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.HOUR_OF_DAY, hour);
+                    calendar.set(Calendar.MINUTE, minute);
+
+
                     AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                    alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, broadcast);
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                            interval * 60 * 1000, broadcast);
 
                     activated = true;
                 } else {
@@ -106,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
                     edit.remove(KEY_HOUR);
                     edit.remove(KEY_MINUTE);
                     edit.apply();
+
+                    Intent notificationIntent = new Intent(MainActivity.this, NotificationPublisher.class);
+                    PendingIntent broadcast = PendingIntent.getBroadcast(MainActivity.this, 0,
+                            notificationIntent, 0);
+
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    alarmManager.cancel(broadcast);
 
                     activated = false;
                 }
